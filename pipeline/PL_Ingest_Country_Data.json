@@ -1,0 +1,41 @@
+{
+	"name": "PL_Ingest_Country_Data",
+	"properties": {
+		"activities": [
+			{
+				"name": "RunCountryIngestionNotebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "process_product_data",
+					"baseParameters": {
+						"customer_count": {
+							"value": "@pipeline().parameters.customerCountParam",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksLinkedService",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"customerCountParam": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-07-22T17:20:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

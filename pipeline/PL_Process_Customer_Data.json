@@ -1,0 +1,76 @@
+{
+	"name": "PL_Process_Customer_Data",
+	"properties": {
+		"activities": [
+			{
+				"name": "RunCustomerProcessingNotebook",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "process_customer_data"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksLinkedService",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "CheckCustomerCount",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "RunCustomerProcessingNotebook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ExecuteProductPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(int(activity('RunCustomerProcessingNotebook').output.runOutput), 600)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ExecuteProductPipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Copy_Product_Data",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"parameters": {
+			"customerCountParam": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-07-22T18:35:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
