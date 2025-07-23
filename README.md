@@ -1,4 +1,7 @@
 🚀 Generic Continuous Data Ingestion into Databricks
+
+
+
 ✨ Project Overview
 This project demonstrates a robust and scalable data engineering pipeline built on Azure, designed for continuous data ingestion from various sources into Azure Databricks for processing and storage. It showcases the orchestration capabilities of Azure Data Factory and the powerful data processing features of Databricks, along with best practices for conditional execution and parameter passing.
 
@@ -234,4 +237,4 @@ Delta Lake: Convert data storage in ADLS Gen2 to Delta Lake format for ACID tran
 
 Data Visualization Dashboard: Connect processed data to a BI tool like Power BI or Tableau for interactive dashboards.
 
-This README.md should give a fantastic overview of your project! Let me know if you'd like any adjustments or further details added.
+👨🏻‍🎓 For collaboration  : arghyachoudhury0081@gmail.com , https://www.linkedin.com/in/arghya-choudhury-7299481a1/ 
